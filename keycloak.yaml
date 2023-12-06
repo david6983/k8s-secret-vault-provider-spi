@@ -1,0 +1,20 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: example-kc
+spec:
+  instances: 1
+  additionalOptions:
+    - name: SPI_K8S_SECRETS_ENABLED
+      value: "true"
+  unsupported:
+    podTemplate:
+      spec:
+        containers:
+          - volumeMounts:
+              - name: providers
+                mountPath: /opt/keycloak/providers
+        volumes:
+          - name: providers
+            hostPath:
+              path: /kind/mount/
